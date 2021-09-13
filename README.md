@@ -59,6 +59,9 @@ You will be running your tests in one terminal and debugging in the other. As yo
 Edit the `ReadMe` file with your answers to the questions below.
 
 1. In your own words, define closure (1-2 sentences).
+  
+  A closure is when a function reaches into an outer scope to grab a value defined elsewhere
+
 2. Study the following code, then answer the questions below.
 
 ```js
@@ -80,8 +83,17 @@ dansRoll();
 ```
 
 a. Where is closure used in this code? How can you tell?
+
+  A closure is used in function() where it grabs {name} for the output string. This name comes from its parent function, personalDice. I can tell because name doesn't show up in the child function.
+
+
 b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
+
+  dansRoll will log the string `${name} rolled a ${newRoll}` every time. Since dansRoll is defined as including the parameter 'Dan', it will include his name in the string every time. Inside the function a new random number is being generated, so with each invocation of dansRoll you will get a new number 1-6.
+  
 c. What is the lexical scope of `newRoll`? 
+
+  `newRoll` is a const so it is block level scoped. This means it can be accessed within the function() function and its children, but not in reverse (cannot be accessed by the parent of the function function())
 
 
 ### Task 3 - Stretch Goals
