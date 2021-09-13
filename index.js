@@ -71,7 +71,6 @@ NOTE: This will be a callback function for the tasks below
 function inning() {
     return Math.floor(Math.random()*3)
 }
-
 // console.log(inning());
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
@@ -88,17 +87,29 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(inningcb, innings){
-  const finalScore = {};
-  finalScore.Away = 0;
-  finalScore.Home = 0;
+function finalScore(inningCB, innings){
+  let homeScore = 0;
+  let awayScore = 0;
   for (let i = 0; i < innings; i++) {
-    finalScore.Away = finalScore.Away + inningcb()
+    homeScore = homeScore + inningCB();
+    awayScore = awayScore + inningCB();
+  } return {
+    Home: homeScore,
+    Away: awayScore
   }
-  for (let i = 0; i < innings; i++) {
-    finalScore.Home = finalScore.Home + inningcb()
-  }
-  return finalScore;
+  
+  // my first attempt - still passed
+
+  // const finalScore = {};
+  // finalScore.Away = 0;
+  // finalScore.Home = 0;
+  // for (let i = 0; i < innings; i++) {
+  //   finalScore.Away = finalScore.Away + inningcb()
+  // }
+  // for (let i = 0; i < innings; i++) {
+  //   finalScore.Home = finalScore.Home + inningcb()
+  // }
+  // return finalScore;
 }
 // console.log('task 3:', finalScore(inning, 3))
 
@@ -107,11 +118,18 @@ Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(inningcb) {
-  const inningScore = {};
-  inningScore.Away = inningcb();
-  inningScore.Home = inningcb();
-  return inningScore;
+function getInningScore(inningCB) {
+  return {
+    Home: inningCB(),
+    Away: inningCB(),
+  }
+
+  // alternate :
+
+  // const inningScore = {};
+  // inningScore.Away = inningcb();
+  // inningScore.Home = inningcb();
+  // return inningScore;
 }
 // console.log(getInningScore(inning))
 
@@ -156,11 +174,22 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(inningScoreCb, inningCb, innings) {
+function scoreboard(inningScoreCB, inningCB, innings) {
   const scoreboard = [];
+  let homeScore = 0;
+  let awayScore = 0;
+
   for (let i = 0; i < innings; i++) {
-    inningScoreCb(inningCb);
-    scoreboard.push(`Inning ${i+1}: Away ${''} - Home ${''}`)
+    const currentInning = inningScoreCB(inningCB);
+    homeScore = homeScore + currentInning.Home; 
+    awayScore = awayScore + currentInning.Away;
+    scoreboard.push(`Inning ${i+1}: Away ${currentInning.Away} - Home ${currentInning.Home}`)
+  }
+
+  if (homeScore === awayScore) {
+    scoreboard.push(`This game will require extra innings: Away ${awayScore} - Home ${homeScore}`)
+  } else if (scoreboard.length === 9) {
+    scoreboard.push(`Final Score: Away ${awayScore} - Home ${homeScore}`)
   }
   return scoreboard
 }
